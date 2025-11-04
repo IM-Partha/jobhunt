@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
+import { useDispatch } from "react-redux";
+import { setsearchquery } from "@/redux/jobSlice";
 
 const filterData = [
   {
@@ -18,12 +20,20 @@ const filterData = [
 ];
 
 const Fitercard = () => {
+  const [selectedValue, setselectedValue] = useState("");
+  const HandelChange = (value) => {
+    setselectedValue(value);
+  };
+  const dispatch =useDispatch()
+  useEffect(() => {
+      dispatch(setsearchquery(selectedValue))
+  }, [selectedValue]);
   return (
     <section className="bg-white rounded-md shadow-md p-5">
       <div>
         <h1 className="text-xl font-semibold text-gray-800">Filter Jobs</h1>
         <hr className="mt-3 mb-4 border-gray-300" />
-        <RadioGroup>
+        <RadioGroup value={selectedValue} onValueChange={HandelChange}>
           {filterData.map((data, index) => (
             <div
               key={index}
@@ -37,10 +47,7 @@ const Fitercard = () => {
                   key={i}
                   className="flex items-center space-x-2 my-2 text-gray-600"
                 >
-                  <RadioGroupItem
-                    value={item}
-                    id={`${data.filterType}-${i}`}
-                  />
+                  <RadioGroupItem value={item} id={`${data.filterType}-${i}`} />
                   <Label
                     htmlFor={`${data.filterType}-${i}`}
                     className="cursor-pointer"

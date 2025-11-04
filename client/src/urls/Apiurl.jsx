@@ -1,2 +1,9 @@
-export const Apiurl ="http://localhost:3000/api/v1/user"
-export const ApiJob = "http://localhost:3000/api/v1/job"
+
+const main = "http://localhost:3000/api"
+
+
+
+export const Apiurl =`${main}/v1/user`
+export const ApiJob = `${main}/v1/job`
+export const Apiapplication = `${main}/v1/application`
+export const JobcraereApi=`${main}/v1/company`

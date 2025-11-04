@@ -8,15 +8,16 @@ export const Register = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, password, role } = req.body;
     console.log(fullname, email, phoneNumber, password, role);
+
+    // Validation check
     if (!fullname || !email || !phoneNumber || !password || !role) {
       return res.status(400).json({
         message: "Something is missing",
         success: false,
       });
     }
-      const file = req.file 
-      const fileuri = getDatauri(file)
-      const cloudResponse = await cloudinary.uploader.upload(fileuri.content)
+
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({
@@ -25,17 +26,29 @@ export const Register = async (req, res) => {
       });
     }
 
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Optional image upload
+    let profilePhotoUrl = ""; // default empty
+
+    if (req.file) {
+      const file = req.file;
+      const fileuri = getDatauri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileuri.content);
+      profilePhotoUrl = cloudResponse.secure_url;
+    }
+
+    // Create new user
     await User.create({
       fullname,
       email,
       phoneNumber,
       password: hashedPassword,
       role,
-      profile:{
-        profilePhoto:cloudResponse.secure_url,
-      }
+      profile: {
+        profilePhoto: profilePhotoUrl, // could be empty if no upload
+      },
     });
 
     return res.status(201).json({
@@ -51,10 +64,10 @@ export const Register = async (req, res) => {
   }
 };
 
+
 export const Login = async (req, res) => {
   try {
     const { email, password, role } = req.body;
-    console.log(email, password, role);
     if (!email || !password || !role) {
       return res.status(400).json({
         message: "Something is missing",

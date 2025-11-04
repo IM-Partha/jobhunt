@@ -4,7 +4,6 @@ import { Bookmark } from "lucide-react";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 const Job = ({ job }) => {
   const navigate = useNavigate();
   const daysAgoFound = (mongodbTime) => {
@@ -34,7 +33,7 @@ const Job = ({ job }) => {
       {/* Company section */}
       <div className="flex items-center gap-3 mt-4">
         <Avatar>
-          <AvatarImage src="" alt="Company Logo" />
+          <AvatarImage src={job?.company?.logo} alt="Company Logo" />
         </Avatar>
 
         <div>

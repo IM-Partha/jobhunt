@@ -8,10 +8,13 @@ import Appliedjob from "./Appliedjob";
 import Applicationtable from "./Applicationtable";
 import Updateprofile from "./Updateprofile";
 import { useSelector } from "react-redux";
+import useGetAppliedJobs from "@/hooks/useGetAllAppliedJob";
 
 const isHaveResume = true;
 const Profile = () => {
+  useGetAppliedJobs()
   const { user } = useSelector((store) => store.auth);
+ 
   const [open, setOpen] = useState(false);
   return (
     <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8 shadow-sm">

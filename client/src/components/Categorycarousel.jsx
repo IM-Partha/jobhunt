@@ -7,6 +7,9 @@ import {
   CarouselPrevious,
 } from "./ui/carousel";
 import { Button } from "./ui/button";
+import { useDispatch } from "react-redux";
+import { setsearchquery } from "@/redux/jobSlice";
+import { useNavigate } from "react-router-dom";
 
 const category = [
   "Frontend Developer",
@@ -17,6 +20,12 @@ const category = [
 ];
 
 const Categorycarousel = () => {
+  const dispatch=useDispatch()
+  const navigate =useNavigate()
+    function searchHandelar(query) {
+      dispatch(setsearchquery(query));
+      navigate("/browse");
+    }
   return (
     <section className="mt-15 px-4 sm:px-6">
       {/* Heading */}
@@ -33,6 +42,7 @@ const Categorycarousel = () => {
               className="flex justify-center basis-full sm:basis-1/2 lg:basis-1/3 cursor-pointer"
             >
               <Button
+              onClick={()=>searchHandelar(item)}
                 variant="outline"
                 className="rounded-full px-4 sm:px-6 py-2 text-sm sm:text-base transition-all w-[85%] sm:w-auto"
               >

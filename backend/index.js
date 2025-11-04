@@ -31,7 +31,7 @@ app.use('/api/v1/application', applicationRouter);
 
 app.get('/',(req,res)=>{
   return res.status(200).json({
-    message:"pookie jayee"
+    message:"pong"
   })
 })
 // server

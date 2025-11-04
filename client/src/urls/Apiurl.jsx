@@ -1,5 +1,6 @@
 
-const main = "http://localhost:3000/api"
+// const main = "http://localhost:3000/api"
+const main = "https://jobhunt-lime-nine.vercel.app"
 
 
 
